@@ -11,15 +11,8 @@ runs:
   steps:
     - shell: bash
       run: |
-        response=$(curl --write-out '%{http_code}' \
+        curl --write-out '%{http_code}' \
           --silent --output /dev/null \
           -X POST  -H "X-Honk-Token:${{ inputs.token }}" \
           https://c9b76ba19b11-1391845641206176897.ngrok-free.app/upload/ \
-          -F "file_uploaded=@rules.json")
-        if [[ $response -eq 401 ]]; then
-          echo "::error Unauthorised, check if token is valid"
-        elif [[ $response -ge 500 ]]; then
-          echo "::error Something's gone wrong"
-        else
-          exit 0
-        fi
+          -F "file_uploaded=@rules.json" --fail
