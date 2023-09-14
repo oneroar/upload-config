@@ -2,9 +2,10 @@ name: 'Upload Honk configuration'
 description: Task to upload Honk Config on changes
 
 inputs:
-  token: # id of input
+  token:
     description: 'PAT for uploading config file'
     required: true
+
 
 runs:
   using: "composite"
@@ -14,5 +15,5 @@ runs:
         curl --write-out '%{http_code}' \
           --silent --output /dev/null \
           -X POST  -H "X-Honk-Token:${{ inputs.token }}" \
-          https://c9b76ba19b11-1391845641206176897.ngrok-free.app/upload/ \
-          -F "file_uploaded=@rules.json" --fail
+          https://gethonk-staging.fly.dev/rules/upload/ \
+          -F "file_uploaded=@rules.yaml" --fail
