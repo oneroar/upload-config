@@ -5,6 +5,9 @@ inputs:
   token:
     description: 'PAT for uploading config file'
     required: true
+  base_url:
+    description: 'Base URL for Honk Instance'
+    default: 'https://gethonk.io'
 
 
 runs:
@@ -15,5 +18,5 @@ runs:
         curl --write-out '%{http_code}' \
           --silent --output /dev/null \
           -X POST  -H "X-Honk-Token:${{ inputs.token }}" \
-          https://gethonk-staging.fly.dev/rules/upload/ \
+          ${{ inputs.base_url }}/rules/upload/ \
           -F "file_uploaded=@rules.yaml" --fail
